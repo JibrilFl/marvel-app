@@ -1,0 +1,53 @@
+@import '../../style/variables';
+
+.appHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    &__title {
+        font-weight: 700;
+        font-size: 28px;
+        line-height: 33px;
+        
+        span {
+            color: $main-color;
+        }
+    }
+}
+
+.nav {
+    display: flex;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 28px;
+
+    &__list {
+        margin: 0 12px;
+        position: relative;   
+    }
+
+    &__list-link {
+        color: black;
+    }
+
+    &__list-link.active {
+        color: $main-color;
+    }
+
+    &__list:last-child {
+        margin-right: 0;
+    }
+
+    &__list:not(:last-child) .nav__list-link {
+        &::after {
+            content: '/';
+            position: absolute;
+            right: -15%;
+            font-weight: 700;
+            font-size: 24px;
+            line-height: 28px;
+            color: black;
+        }
+    }
+}
