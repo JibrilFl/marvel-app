@@ -28,6 +28,7 @@
         font-weight: 700;
         font-size: 22px;
         line-height: 26px;
+        text-transform: uppercase;
     }
 
     &__info_descr {
@@ -42,6 +43,10 @@
         padding-right: 33px;
         display: flex;
         justify-content: space-between;
+    }
+
+    &__info_btns .btn:first-child {
+        margin-right: 30px;
     }
 
     &__box {
