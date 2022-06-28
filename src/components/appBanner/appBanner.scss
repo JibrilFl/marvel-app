@@ -1,0 +1,20 @@
+@import '../../style/variables';
+
+.appBanner {
+    padding: 0 25px 0 45px;
+    height: 100px;
+    background-color: $dark;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    &__title {
+        margin-right: auto;
+        margin-left: 83px;
+
+        font-weight: 700;
+        font-size: 24px;
+        line-height: 28px;
+        color: #fff;
+    }
+}

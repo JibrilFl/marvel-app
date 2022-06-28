@@ -1,0 +1,43 @@
+@import '../../style/variables';
+
+.charList__wrapper {
+    margin-top: 50px;
+    display: grid;
+    align-items: start;
+    grid-template-columns: 650px 425px;
+    column-gap: 25px;
+}
+
+.charList {
+    &__grid {
+        display: grid;
+        grid-template-columns: repeat(3, 200px);
+        grid-auto-rows: 318px;
+        gap: 30px 25px;
+    }
+
+    &__item {
+        background-color: $dark;
+        transition: .3s transform, .3s filter;
+    }
+
+    &__item:hover {
+        transform: translateY(-8px);
+        filter: drop-shadow(0px 5px 20px $main-color);
+    }
+
+    &__item_img {
+        width: 200px;
+        height: 200px;
+        object-fit: cover;
+    }
+
+    &__item_name {
+        padding: 15px;
+        font-weight: 700;
+        font-size: 22px;
+        line-height: 26px;
+        text-transform: uppercase;
+        color: #fff;
+    }
+}

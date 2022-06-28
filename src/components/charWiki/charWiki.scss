@@ -1,0 +1,26 @@
+.charWiki {
+    margin-top: 50px;
+    display: flex;
+
+    &__img {
+        margin-right: 50px;
+        width: 293px;
+        height: 293px;
+        object-fit: cover;
+    }
+
+    &__name {
+        font-weight: 700;
+        font-size: 22px;
+        line-height: 26px;
+        text-transform: uppercase;
+    }
+
+    &__descr {
+        margin-top: 25px;
+        max-width: 550px;
+        font-weight: 400;
+        font-size: 18px;
+        line-height: 21px;
+    }
+}

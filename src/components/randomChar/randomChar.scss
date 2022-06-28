@@ -11,6 +11,12 @@
         display: flex;
     }
 
+    &__info_inner {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
     &__info_img {
         max-width: 180px;
         max-height: 180px;
