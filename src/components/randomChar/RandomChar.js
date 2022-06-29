@@ -8,15 +8,19 @@ import mjolnir from '../../resources/shield-and-mjolnir.png';
 import './randomChar.scss';
 
 class RandomChar extends Component {
-    constructor(props) {
-        super(props);
-        this.updateChar();
-    }
-
     state = {
         char: {},
         loading: true,
         error: false
+    }
+
+    componentDidMount() {
+        this.updateChar();
+        // this.timerID = setInterval(this.updateChar, 3000);
+    }
+
+    componentWillUnmount = () => {
+        clearInterval(this.timerID);
     }
 
     marvelService = new MarvelService();
@@ -43,6 +47,12 @@ class RandomChar extends Component {
             .catch(this.onError)
     }
 
+    onUpdateChar = () => {
+        clearInterval(this.timerID);
+        this.updateChar();
+        this.timerID = setInterval(this.updateChar, 3000);
+    }
+
     render() {
         const { char, loading, error } = this.state;
         const errorMessage = error ? <ErrorMessage /> : null;
@@ -64,7 +74,9 @@ class RandomChar extends Component {
                             Or choose another one
                         </p>
                         <div className="randomChar__box_btn">
-                            <a className="btn btn__main" href="#Homepage">
+                            <a className="btn btn__main"
+                                href="#Homepage"
+                                onClick={this.onUpdateChar} >
                                 <div className="inner">Try it</div>
                             </a>
                         </div>
@@ -81,7 +93,10 @@ const View = ({ char }) => {
 
     return (
         <div className="randomChar__info">
-            <img className="randomChar__info_img" src={thumbnail} alt={name} />
+            <img className="randomChar__info_img"
+                src={thumbnail}
+                alt={name}
+                style={thumbnail.indexOf('image_not') > - 1 ? { objectFit: 'contain' } : { objectFit: 'cover' }} />
             <div className="randomChar__info_inner">
                 <div className="randomChar__info_name">{name}</div>
                 <p className="randomChar__info_descr">{description}</p>
