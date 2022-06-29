@@ -1,9 +1,10 @@
 @import '../../style/variables';
 
 .randomChar {
-    box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.25);
-    display: flex;
     width: 100%;
+    display: flex;
+    align-items: center;
+    box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.25);
 
     &__info {
         padding: 35px 35px 35px 40px;
@@ -18,8 +19,8 @@
     }
 
     &__info_img {
-        max-width: 180px;
-        max-height: 180px;
+        width: 180px;
+        height: 180px;
         object-fit: cover;
         margin-right: 30px;
     }
@@ -33,7 +34,7 @@
 
     &__info_descr {
         margin-top: 10px;
-        margin-bottom: 13px;
+        margin-bottom: auto;
         font-weight: 400;
         font-size: 14px;
         line-height: 16px;
