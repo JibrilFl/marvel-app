@@ -1,4 +1,5 @@
 import { Component } from 'react';
+
 import Spinner from '../spinner/Spinner';
 import ErrorMessage from '../errorMessage/ErrorMessage';
 import MarvelService from '../../services/MarvelService';
@@ -14,6 +15,8 @@ class RandomChar extends Component {
         error: false
     }
 
+    marvelService = new MarvelService();
+
     componentDidMount() {
         this.updateChar();
         // this.timerID = setInterval(this.updateChar, 3000);
@@ -22,8 +25,6 @@ class RandomChar extends Component {
     componentWillUnmount = () => {
         clearInterval(this.timerID);
     }
-
-    marvelService = new MarvelService();
 
     onCharLoaded = (char) => {
         this.setState({
@@ -39,18 +40,19 @@ class RandomChar extends Component {
         });
     }
 
+    onCharLoading = () => {
+        this.setState({
+            loading: true
+        })
+    }
+
     updateChar = () => {
         const id = Math.floor(Math.random() * (1011400 - 1011000) + 1011000);
+        this.onCharLoading();
         this.marvelService
             .getCharacter(id)
             .then(this.onCharLoaded)
             .catch(this.onError)
-    }
-
-    onUpdateChar = () => {
-        clearInterval(this.timerID);
-        this.updateChar();
-        this.timerID = setInterval(this.updateChar, 3000);
     }
 
     render() {
@@ -76,7 +78,7 @@ class RandomChar extends Component {
                         <div className="randomChar__box_btn">
                             <a className="btn btn__main"
                                 href="#Homepage"
-                                onClick={this.onUpdateChar} >
+                                onClick={this.updateChar} >
                                 <div className="inner">Try it</div>
                             </a>
                         </div>

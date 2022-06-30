@@ -1,111 +1,133 @@
-import loki from '../../resources/loki.png';
+import { Component } from 'react';
+
+import MarvelService from '../../services/MarvelService';
+import Spinner from '../spinner/Spinner';
+import ErrorMessage from '../errorMessage/ErrorMessage';
+import Skeleton from '../skeleton/Skeleton';
 
 import './charInfo.scss';
 
-const CharInfo = () => {
+class CharInfo extends Component {
+
+    state = {
+        char: null,
+        loading: false,
+        error: false
+    }
+
+    marvelService = new MarvelService();
+
+    componentDidMount() {
+        this.updateChar();
+    }
+
+    componentDidUpdate(prevProps) {
+        if (this.props.charId !== prevProps.charId) {
+            this.updateChar();
+        }
+    }
+
+    updateChar = () => {
+        const { charId } = this.props;
+
+        if (!charId) {
+            return;
+        }
+
+        this.onCharLoading();
+
+        this.marvelService
+            .getCharacter(charId)
+            .then(this.onCharLoaded)
+            .catch(this.onError)
+    }
+
+    onCharLoaded = (char) => {
+        this.setState({
+            char,
+            loading: false
+        });
+    }
+
+    onError = () => {
+        this.setState({
+            loading: false,
+            error: true
+        });
+    }
+
+    onCharLoading = () => {
+        this.setState({
+            loading: true
+        })
+    }
+
+    render() {
+        const { char, loading, error } = this.state;
+
+        const skeleton = char || loading || error ? null : <Skeleton />;
+        const errorMessage = error ? <ErrorMessage /> : null;
+        const spinner = loading ? <Spinner /> : null;
+        const content = !(loading || error || !char) ? <View char={char} /> : null;
+
+        return (
+            <div className="charInfo">
+                {skeleton}
+                {errorMessage}
+                {spinner}
+                {content}
+            </div>
+        )
+    }
+}
+
+const View = ({ char }) => {
+    const { name, description, thumbnail, homepage, wiki, comics } = char;
+
+    let styleImg = { objectFit: 'cover' };
+    if (thumbnail.indexOf('image_not') > -1) {
+        styleImg.objectFit = 'contain'
+    }
+
+    const comicsList = comics.filter((item, i) => i < 10);
+
     return (
-        <div className="charInfo">
+        <>
             <div className="charInfo__header">
-                <img className="charInfo__header_img" src={loki} alt="Loki" />
+                <img className="charInfo__header_img" src={thumbnail} alt={name} style={styleImg} />
                 <div className="charInfo__header_inner">
-                    <h3 className="charInfo__header_name">Loki</h3>
+                    <h3 className="charInfo__header_name">{name}</h3>
                     <div className="charInfo__header_btns">
-                        <a className="btn btn__main" href="#">
+                        <a className="btn btn__main" href={homepage} >
                             <div className="inner">Homepage</div>
                         </a>
-                        <a className="btn btn__secondary" href="#">
+                        <a className="btn btn__secondary" href={wiki} >
                             <div className="inner">Wiki</div>
                         </a>
                     </div>
                 </div>
             </div>
-            <p className="charInfo__descr">
-                In Norse mythology, Loki is a god or jötunn (or both).
-                Loki is the son of Fárbauti and Laufey, and the brother
-                of Helblindi and Býleistr. By the jötunn Angrboða, Loki
-                is the father of Hel, the wolf Fenrir, and the world
-                serpent Jörmungandr. By Sigyn, Loki is the father of
-                Nari and/or Narfi and with the stallion Svaðilfari as
-                the father, Loki gave birth—in the form of a mare—to the
-                eight-legged horse Sleipnir. In addition, Loki is
-                referred to as the father of Váli in the Prose Edda.
-            </p>
+            <p className="charInfo__descr">{description}</p>
             <div className="charInfo__comics">
                 <h3 className="charInfo__comics_title">Comics:</h3>
                 <ul className="charInfo__comicsItems">
-                    <li className="charInfo__comicsItem">
-                        <div className="charInfo__comicsItem_inner">
-                            <div className="charInfo__comicsItem_name">
-                                All-Winners Squad: Band of Heroes (2011) #3
-                            </div>
-                        </div>
-                    </li>
-                    <li className="charInfo__comicsItem">
-                        <div className="charInfo__comicsItem_inner">
-                            <div className="charInfo__comicsItem_name">
-                                Alpha Flight (1983) #50
-                            </div>
-                        </div>
-                    </li>
-                    <li className="charInfo__comicsItem">
-                        <div className="charInfo__comicsItem_inner">
-                            <div className="charInfo__comicsItem_name">
-                                Amazing Spider-Man (1999) #503
-                            </div>
-                        </div>
-                    </li>
-                    <li className="charInfo__comicsItem">
-                        <div className="charInfo__comicsItem_inner">
-                            <div className="charInfo__comicsItem_name">
-                                Amazing Spider-Man (1999) #504
-                            </div>
-                        </div>
-                    </li>
-                    <li className="charInfo__comicsItem">
-                        <div className="charInfo__comicsItem_inner">
-                            <div className="charInfo__comicsItem_name">
-                                AMAZING SPIDER-MAN VOL. 7: BOOK OF EZEKIEL TPB (Trade Paperback)
-                            </div>
-                        </div>
-                    </li>
-                    <li className="charInfo__comicsItem">
-                        <div className="charInfo__comicsItem_inner">
-                            <div className="charInfo__comicsItem_name">
-                                Amazing-Spider-Man: Worldwide Vol. 8 (Trade Paperback)
-                            </div>
-                        </div>
-                    </li>
-                    <li className="charInfo__comicsItem">
-                        <div className="charInfo__comicsItem_inner">
-                            <div className="charInfo__comicsItem_name">
-                                Asgardians Of The Galaxy Vol. 2: War Of The Realms (Trade Paperback)
-                            </div>
-                        </div>
-                    </li>
-                    <li className="charInfo__comicsItem">
-                        <div className="charInfo__comicsItem_inner">
-                            <div className="charInfo__comicsItem_name">
-                                Vengeance (2011) #4
-                            </div>
-                        </div>
-                    </li>
-                    <li className="charInfo__comicsItem">
-                        <div className="charInfo__comicsItem_inner">
-                            <div className="charInfo__comicsItem_name">
-                                Avengers (1963) #1
-                            </div>
-                        </div>
-                    </li>
-                    <li className="charInfo__comicsItem">
-                        <div className="charInfo__comicsItem_inner">
-                            <div className="charInfo__comicsItem_name">
-                                Avengers (1996) #1
-                            </div>
-                        </div>
-                    </li>
+                    {comicsList.length > 0 ? null : 'There is no comics with character'}
+                    {
+                        comicsList.map((item, i) => {
+                            return (
+                                <li className="charInfo__comicsItem" key={i}>
+                                    <div className="charInfo__comicsItem_inner">
+                                        <div className="charInfo__comicsItem_name">
+                                            {item.name}
+                                        </div>
+                                    </div>
+                                </li>
+                            );
+                        })
+                    }
                 </ul>
             </div>
-        </div>
+        </>
     )
 }
 

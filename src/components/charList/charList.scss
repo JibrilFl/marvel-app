@@ -6,6 +6,10 @@
     align-items: start;
     grid-template-columns: 650px 425px;
     column-gap: 25px;
+
+    .skeleton {
+        margin-top: 30px;
+    }
 }
 
 .charList {
