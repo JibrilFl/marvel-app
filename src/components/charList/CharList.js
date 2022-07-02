@@ -17,6 +17,8 @@ class CharList extends Component {
         charEnded: false
     }
 
+    charRefs = [];
+
     marvelService = new MarvelService();
 
     componentDidMount() {
@@ -62,8 +64,18 @@ class CharList extends Component {
         }));
     }
 
+    setCharRef = (char) => {
+        this.charRefs.push(char);
+    }
+
+    onFocusChar = (id) => {
+        this.charRefs.forEach(item => item.classList.remove('active'));
+        this.charRefs[id].classList.add('active');
+        this.charRefs[id].focus();
+    }
+
     renderCharacters = (arr) => {
-        const items = arr.map(item => {
+        const items = arr.map((item, i) => {
             const { id, name, thumbnail } = item;
 
             let styleImg = { objectFit: 'cover' };
@@ -73,9 +85,20 @@ class CharList extends Component {
 
             return (
                 <div
-                    className="charList__item"
+                    className='charList__item'
+                    ref={this.setCharRef}
                     key={id}
-                    onClick={() => this.props.onCharSelected(id)} >
+                    tabIndex={0}
+                    onClick={() => {
+                        this.props.onCharSelected(id);
+                        this.onFocusChar(i)
+                    }}
+                    onKeyPress={(e) => {
+                        if (e.key === ' ' || e.key === 'Enter') {
+                            this.props.onCharSelected(id);
+                            this.onFocusChar(i);
+                        }
+                    }} >
                     <img className="charList__item_img" src={thumbnail} alt={name} style={styleImg} />
                     <h3 className="charList__item_name">{name}</h3>
                 </div>

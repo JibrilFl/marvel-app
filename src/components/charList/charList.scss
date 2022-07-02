@@ -23,11 +23,16 @@
     &__item {
         background-color: $dark;
         transition: .3s transform, .3s filter;
-    }
 
-    &__item:hover {
-        transform: translateY(-8px);
-        filter: drop-shadow(0px 5px 20px $main-color);
+        &:focus {
+            transform: translateY(-8px);
+            filter: drop-shadow(0px 5px 20px $main-color);
+        }
+    
+        &.active {
+            transform: translateY(-8px);
+            filter: drop-shadow(0px 5px 20px $main-color);
+        }
     }
 
     &__item_img {
