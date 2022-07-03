@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/JibrilFl/marvel-app/static/css/main.4aa15d5d.css",
+    "main.js": "/JibrilFl/marvel-app/static/js/main.3db3b7af.js",
+    "static/media/vigen-bg.png": "/JibrilFl/marvel-app/static/media/vigen-bg.96cbe09bed67b0d04328.png",
+    "static/media/error.png": "/JibrilFl/marvel-app/static/media/error.4777eeea088c5afff067.png",
+    "static/media/shield-and-mjolnir.png": "/JibrilFl/marvel-app/static/media/shield-and-mjolnir.4877bd12f637c476f009.png",
+    "index.html": "/JibrilFl/marvel-app/index.html",
+    "main.4aa15d5d.css.map": "/JibrilFl/marvel-app/static/css/main.4aa15d5d.css.map",
+    "main.3db3b7af.js.map": "/JibrilFl/marvel-app/static/js/main.3db3b7af.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.4aa15d5d.css",
+    "static/js/main.3db3b7af.js"
+  ]
+}
