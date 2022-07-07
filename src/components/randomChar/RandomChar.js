@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 
 import Spinner from '../spinner/Spinner';
 import ErrorMessage from '../errorMessage/ErrorMessage';
-import MarvelService from '../../services/MarvelService';
+import useMarvelService from '../../services/MarvelService';
 
 import mjolnir from '../../resources/shield-and-mjolnir.png';
 
@@ -11,39 +11,28 @@ import './randomChar.scss';
 const RandomChar = () => {
 
     const [char, setChar] = useState({});
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(false);
 
-    const marvelService = new MarvelService();
+    const { loading, error, getCharacter, clearError } = useMarvelService();
 
     useEffect(() => {
         updateChar();
-        const timerID = setInterval(updateChar, 3000);
+        // const timerID = setInterval(updateChar, 3000);
 
-        // return clearInterval(timerID);
+        // return () => {
+        //     clearInterval(timerID);
+        // }
     }, []);
 
     const onCharLoaded = (newChar) => {
         setChar(char => newChar);
-        setLoading(loading => false);
     }
 
-    const onError = () => {
-        setLoading(loading => false);
-        setError(error => true);
-    }
-
-    const onCharLoading = () => {
-        setLoading(loading => true);
-    }
 
     const updateChar = () => {
+        clearError();
         const id = Math.floor(Math.random() * (1011400 - 1011000) + 1011000);
-        onCharLoading();
-        marvelService
-            .getCharacter(id)
+        getCharacter(id)
             .then(onCharLoaded)
-            .catch(onError)
     }
 
     const errorMessage = error ? <ErrorMessage /> : null;
@@ -82,12 +71,22 @@ const RandomChar = () => {
 const View = ({ char }) => {
     const { name, description, thumbnail, homepage, wiki } = char;
 
+    let style = {
+        objectFit: 'contain'
+    }
+
+    if (thumbnail) {
+        if (!(thumbnail.indexOf('image_not') > -1)) {
+            style = { objectFit: 'cover' }
+        }
+    }
+
     return (
         <div className="randomChar__info">
             <img className="randomChar__info_img"
                 src={thumbnail}
                 alt={name}
-                style={thumbnail.indexOf('image_not') > - 1 ? { objectFit: 'contain' } : { objectFit: 'cover' }} />
+                style={style} />
             <div className="randomChar__info_inner">
                 <div className="randomChar__info_name">{name}</div>
                 <p className="randomChar__info_descr">{description}</p>
