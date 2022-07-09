@@ -16,11 +16,11 @@ const RandomChar = () => {
 
     useEffect(() => {
         updateChar();
-        // const timerID = setInterval(updateChar, 3000);
+        const timerID = setInterval(updateChar, 3000);
 
-        // return () => {
-        //     clearInterval(timerID);
-        // }
+        return () => {
+            clearInterval(timerID);
+        }
     }, []);
 
     const onCharLoaded = (newChar) => {
@@ -77,7 +77,7 @@ const View = ({ char }) => {
 
     if (thumbnail) {
         if (!(thumbnail.indexOf('image_not') > -1)) {
-            style = { objectFit: 'cover' }
+            style = { objectFit: 'fill' }
         }
     }
 

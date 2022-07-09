@@ -52,7 +52,7 @@ const CharList = (props) => {
 
             let styleImg = { objectFit: 'cover' };
             if (thumbnail.indexOf('image_not') > -1) {
-                styleImg.objectFit = 'contain'
+                styleImg.objectFit = 'fill'
             }
 
             return (
