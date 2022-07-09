@@ -12,6 +12,10 @@
         font-weight: 700;
         font-size: 14px;
         line-height: 16px;
+        transition: transform .3s;
+        &:hover {
+            transform: translateY(-15px);
+        }
     }
 
     &__item_img {
