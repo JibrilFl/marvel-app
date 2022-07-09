@@ -13,9 +13,15 @@ import decoration from '../../resources/vigen-bg.png';
 const App = () => {
 
 	const [selectedChar, setChar] = useState(null);
+	const [selectedComic, setComic] = useState(null);
 
 	const onCharSelected = (id) => {
 		setChar(id);
+	}
+
+	const onComicSelected = (id) => {
+		setComic(id);
+		console.log('Гача!');
 	}
 
 	return (
