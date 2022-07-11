@@ -47,7 +47,7 @@ const useMarvelService = () => {
             name: char.name,
             description: editDescr(char.description, 200),
             thumbnail: char.thumbnail.path + '.' + char.thumbnail.extension,
-            homepage: char.urls[0].url,
+            homePage: char.urls[0].url,
             wiki: char.urls[1].url,
             comics: char.comics.items
         }
@@ -57,10 +57,10 @@ const useMarvelService = () => {
         return {
             id: comic.id,
             name: comic.title,
-            description: comic.description,
-            page: comic.pageCount,
+            description: comic.description ? comic.description : 'No description...',
+            page: comic.pageCount + ' pages',
             thumbnail: comic.thumbnail.path + '.' + comic.thumbnail.extension,
-            language: comic.textObjects.language,
+            language: comic.textObjects.language ? comic.textObjects.language : 'en-us',
             price: comic.prices[0].price + '$'
         }
     }

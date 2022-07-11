@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import useMarvelService from '../../services/MarvelService';
 import Spinner from '../spinner/Spinner';
@@ -5,7 +6,7 @@ import ErrorMessage from '../errorMessage/ErrorMessage';
 
 import './comicList.scss';
 
-const ComicList = (props) => {
+const ComicList = () => {
 
     const [comicList, setComicList] = useState([]);
     const [newItemLoading, setNewItemLoading] = useState(false);
@@ -46,21 +47,22 @@ const ComicList = (props) => {
             }
 
             return (
-                <div
+                <li
                     className="comicList__item"
-                    key={i}
-                    onClick={() => props.onComicSelected(id)} >
-                    <img className="comicList__item_img" src={thumbnail} style={style} alt="Days of Future Past" />
-                    <h3 className="comicList__item_name">{name}</h3>
-                    <div className="comicList__item_price">{price}</div>
-                </div>
+                    key={i}>
+                    <Link to={`/comics/${id}`}>
+                        <img className="comicList__item_img" src={thumbnail} style={style} alt="Days of Future Past" />
+                        <h3 className="comicList__item_name">{name}</h3>
+                        <div className="comicList__item_price">{price}</div>
+                    </Link>
+                </li>
             )
         });
 
         return (
-            <div className="comicList__items">
+            <ul className="comicList__items">
                 {items}
-            </div>
+            </ul>
         )
     }
 
