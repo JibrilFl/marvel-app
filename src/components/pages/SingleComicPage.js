@@ -1,4 +1,4 @@
-import { useParams, Link } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 
 import useMarvelService from '../../services/MarvelService';
@@ -44,6 +44,8 @@ const SingleComicPage = () => {
 const View = ({ comic }) => {
     const { name, description, thumbnail, page, language, price } = comic;
 
+    const navigate = useNavigate();
+
     let style = { objectFit: 'cover' };
     if (thumbnail.indexOf('image_not') > -1) {
         style.objectFit = 'fill'
@@ -60,8 +62,8 @@ const View = ({ comic }) => {
                 <p className="comicInfo__lang">Language: {language}</p>
                 <p className="comicInfo__price">{price}</p>
             </div>
-            <Link className="comicInfo__link" to="/comics">Back to all</Link>
-        </div>
+            <a className="comicInfo__link" onClick={() => navigate(-1)} style={{ 'cursor': 'pointer', 'height': '100%' }}>Back to all</a>
+        </div >
     )
 }
 
