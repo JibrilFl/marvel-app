@@ -1,0 +1,29 @@
+.charInfo {
+    margin-top: 50px;
+    display: flex;
+
+    &__img {
+        margin-right: 50px;
+        width: 293px;
+        height: 450px;
+        object-fit: cover;
+    }
+
+    &__inner {
+        margin-right: auto;
+        font-weight: 400;
+        font-size: 18px;
+        line-height: 21px;
+    }
+
+    &__title {
+        font-weight: 700;
+        font-size: 22px;
+        line-height: 26px;
+    }
+
+    &__descr {
+        margin-top: 25px;
+        max-width: 550px;
+    }
+}

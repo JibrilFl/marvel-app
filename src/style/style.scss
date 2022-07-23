@@ -146,6 +146,7 @@ table {
     margin: 0 auto;
     padding: 50px 0;
     position: relative;
+
     .bg-decoration {
         position: absolute;
         right: 0;
@@ -159,6 +160,11 @@ main {
     position: relative;
 }
 
+.error {
+    color: $main-color;
+    font-size: 14px;
+}
+
 .pulse {
     animation: pulse 1.5s ease-in-out .5s infinite
 }
@@ -167,9 +173,11 @@ main {
     0% {
         opacity: 1
     }
+
     50% {
         opacity: .4
     }
+
     100% {
         opacity: 1
     }
