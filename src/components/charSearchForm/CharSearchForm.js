@@ -1,16 +1,48 @@
+import Spinner from '../spinner/Spinner';
+import ErrorMessage from '../errorMessage/ErrorMessage';
+import Skeleton from '../skeleton/Skeleton';
 import { useState } from 'react';
 import { Formik, Form, Field, ErrorMessage as FormikErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { Link } from 'react-router-dom';
 
 import useMarvelService from '../../services/MarvelService';
-import ErrorMessage from '../errorMessage/ErrorMessage';
 
 import './charSearchForm.scss';
 
+const setContent = (process, data) => {
+    switch (process) {
+        case 'waiting':
+            return null;
+        case 'loading':
+            return <Spinner />;
+        case 'confirmed':
+            if (data.length > 0) {
+                return (
+                    <div className="char__search-wrapper">
+                        <div className="char__search-success">There is! Visit {data[0].name} page?</div>
+                        <Link to={`/characters/${data[0].id}`} className="btn btn__secondary">
+                            <div className="inner">To page</div>
+                        </Link>
+                    </div>
+                )
+            } else {
+                return (
+                    <div className="char__search-error">
+                        The character was not found. Check the name and try again
+                    </div>
+                )
+            };
+        case 'error':
+            return <ErrorMessage />;
+        default:
+            throw new Error('Unexpected process state');
+    }
+}
+
 const CharSearchForm = () => {
     const [char, setChar] = useState(null);
-    const { loading, error, getNameCharacter, clearError } = useMarvelService();
+    const { getNameCharacter, clearError, process, setProcess } = useMarvelService();
 
     const onCharLoaded = (char) => {
         setChar(char);
@@ -20,20 +52,9 @@ const CharSearchForm = () => {
         clearError();
 
         getNameCharacter(name)
-            .then(onCharLoaded);
+            .then(onCharLoaded)
+            .then(() => setProcess('confirmed'));
     }
-
-    const errorMessage = error ? <div className="char__search-critical-error"><ErrorMessage /></div> : null;
-    const results = !char ? null : char.length > 0 ?
-        <div className="char__search-wrapper">
-            <div className="char__search-success">There is! Visit {char[0].name} page?</div>
-            <Link to={`/characters/${char[0].id}`} className="btn btn__secondary">
-                <div className="inner">To page</div>
-            </Link>
-        </div> :
-        <div className="char__search-error">
-            The character was not found. Check the name and try again
-        </div>;
 
     return (
         <div className="char__search-form">
@@ -59,15 +80,14 @@ const CharSearchForm = () => {
                         <button
                             type='submit'
                             className="btn btn__main"
-                            disabled={loading}>
+                            disabled={process === 'loading'}>
                             <div className="inner">find</div>
                         </button>
                     </div>
                     <FormikErrorMessage component="div" className="char__search-error" name="charName" />
                 </Form>
             </Formik>
-            {results}
-            {errorMessage}
+            {setContent(process, char)}
         </div>
     )
 }
